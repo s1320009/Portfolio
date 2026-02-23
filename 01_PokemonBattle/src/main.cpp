@@ -19,8 +19,12 @@ public:
         moves.push_back({moveName, power}); 
     }
 
-    void greet() {
-        std::cout << name << " が あらわれた！ (HP: " << hp << ")" << std::endl;
+    void attack(int moveIndex, Pokemon &target) {
+        Move &selectedMove = moves[moveIndex];
+        std::cout << name << " は " << selectedMove.name << " を くりだした!" << std:: endl;
+
+        target.hp -= selectedMove.power; // 相手のHPを減らす
+        std::cout << target.name << " に " << selectedMove.power << " の ダメージ!" << std::endl;
     }
 
     void showMoves() {
@@ -38,7 +42,24 @@ int main() {
     p1.learnMove("10まんボルト", 90);
     p1.learnMove("でんこうせっか", 40);
 
-    p1.greet();
+    Pokemon p2("ヒトカゲ", 100);
+
+    std::cout << p2.name << " が あらわれた!" << std::endl;
+
+    // -----ここから入力処理　-----
     p1.showMoves(); // 技の表示
+
+    int choice;
+    std::cout << p1.name << " は どうする？ ";
+    std::cin >> choice; // キーボード入力を受け取る
+
+    if (choice >= 1 && choice <= (int)p1.moves.size()) {
+        p1.attack(choice - 1, p2); // 選択された技で攻撃
+    } else {
+        std::cout << "しかし うまく きまらなかった!" << std::endl;
+    }
+
+    // 相手の残りHPを表示
+    std::cout << p2.name << " の 残りHP: " << p2.hp << std::endl;
     return 0;
 }
