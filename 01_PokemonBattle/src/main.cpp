@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -25,6 +25,10 @@ public:
 
         target.hp -= selectedMove.power; // 相手のHPを減らす
         std::cout << target.name << " に " << selectedMove.power << " の ダメージ!" << std::endl;
+    }
+
+    bool isFainted() { //相手が倒れたかの判定
+        return hp <= 0;
     }
 
     void showMoves() {
